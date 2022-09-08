@@ -1,13 +1,17 @@
 import React, {useState} from 'react'
 import {Form,Button} from 'react-bootstrap';
 import ProductList from './ProductList';
-const Sell = () => {
+
+export default function Sell({productTitle}) {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState("");
     const [quantity, setQuantity] = useState("");
     const [delivery, setDelivery] = useState("");
     const [location, setLocation] = useState("");
+    const [email, setEmail] = useState(window.localStorage.getItem("logged_in_user"));
+
+    
 
     const handleSubmit = async (e) =>{
         e.preventDefault();
@@ -77,4 +81,4 @@ const Sell = () => {
   )
 }
 
-export default Sell
+// export default Sell

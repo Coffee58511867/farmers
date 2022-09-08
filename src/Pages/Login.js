@@ -26,7 +26,8 @@ const Login = () => {
         console.log(data, "userRegister");
         if (data.status === "ok") {
           alert("login successful");
-          window.localStorage.setItem("token", data.data);
+          window.localStorage.setItem("token", data);
+          window.localStorage.setItem("logged_in_user", body.email);
           window.location.href = "/sell";
         }
         else{

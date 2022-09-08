@@ -34,7 +34,10 @@ const ProductList = () => {
             console.log(error);
           });
       };
-      const updateProduct = async (id) => {
+      const updateProduct = async (id, title) => {
+
+        console.log(id);
+        console.log(title);
         
         const update = {
             method: "PUT",
@@ -80,7 +83,7 @@ const ProductList = () => {
 
                 <td>
                   <Button
-                   onClick={() => updateProduct(val._id)}
+                   onClick={() => updateProduct(val._id, val.title)}
                   >Edit</Button>
                 </td>
                 <td>
