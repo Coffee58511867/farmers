@@ -1,57 +1,53 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
-import { Row, Card, Button , Table } from "react-bootstrap";
+import { Row, Card, Button, Table } from "react-bootstrap";
 
 const ProductList = () => {
-    const [products, setProducts] = useState([]);
-  
-    useEffect(() => {
-      const data = {
-        method: "get",
-        url: "http://localhost:8000/app/readproducts",
-      };
-      axios(data)
-        .then((result) => {
-          console.log(result);
-          setProducts(result.data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }, []);
-    const deleteTodo = async (id) => {
-        const del = {
-          method: "delete",
-          url: "http://localhost:8000/app/deleteproducts/" + id,
-        };
-        axios(del)
-          .then((result) => {
-            alert("Item Deleted Successful");
-            setProducts(products.filter((val) => val._id !== id));
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      };
-      const updateProduct = async (id) => {
-        
-        const update = {
-            method: "PUT",
-            url: "http://localhost:8000/app/updateproducts/" + id,
-          };
-          axios(update)
-            .then((result) => {
-              alert("Item Deleted Successful");
-             
-            })
-            .catch((error) => {
-              console.log(error);
-            });
+  const [products, setProducts] = useState([]);
+ 
+  useEffect(() => {
+    axios.get("http://localhost:8000/app/readproducts").then((response) => {
+      let arrayOfMrs = [];
+
+      for (let i = 0; i < response.data.length; i++) {
+        if (response.data[i].email === localStorage.getItem("email")) {
+          arrayOfMrs.push(response.data[i]);
+        }
       }
+
+      setProducts(arrayOfMrs);
+    });
+  }, []);
+  const deleteTodo = async (id) => {
+    const del = {
+      method: "delete",
+      url: "http://localhost:8000/app/deleteproducts/" + id,
+    };
+    axios(del)
+      .then((result) => {
+        alert("Item Deleted Successful");
+        setProducts(products.filter((val) => val._id !== id));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const updateProduct = async (id) => {
+    const update = {
+      method: "PUT",
+      url: "http://localhost:8000/app/updateproduct/" + id,
+    };
+    axios(update)
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <div>
-      
       <Table striped bordered hover className="table">
         <thead>
           <tr>
@@ -79,9 +75,7 @@ const ProductList = () => {
                 <td>{val.location}</td>
 
                 <td>
-                  <Button
-                   onClick={() => updateProduct(val._id)}
-                  >Edit</Button>
+                  <Button onClick={() => updateProduct(val._id)}>Edit</Button>
                 </td>
                 <td>
                   <Button
@@ -98,7 +92,7 @@ const ProductList = () => {
         </tbody>
       </Table>
     </div>
-  )
-}
+  );
+};
 
-export default ProductList
+export default ProductList;
