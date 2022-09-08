@@ -7,46 +7,34 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [status, setStatus] = useState("You are not Logged in")
 
-  const handleSubmit = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    try {
-      const body = { email, password };
-      const response = await fetch("http://localhost:8000/app/login", {
-        method: "Get",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
-      });
-      console.log(response);
-    } catch (err) {
-      console.log(err.message);
-    }
-  };
-  const handleLogin = () => {
-    const configuration = {
-      method: "get",
-      url: "http://localhost:8000/app/login",
+    const body = { email, password };
 
-      data: {
-        email,
-        password,
+    fetch("http://localhost:8000/app/login", {
+      method: "POST",
+      crossDomain: true,
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "Access-Control-Allow-Origin": "*",
       },
-    };
-    axios(configuration)
-      .then((result) => {
-        console.log(result);
-        if (result.data.status) {
-          setStatus(result.data.status);
-        } else {
-         // window.location.href = "/users";
+      body: JSON.stringify(body),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data, "userRegister");
+        if (data.status === "ok") {
+          alert("login successful");
+          window.localStorage.setItem("token", data.data);
+          window.location.href = "/sell";
         }
-      })
-      .catch((error) => {
-        console.log(error);
+        else{
+          alert("Password or Username is Incorrect")
+        }
       });
-
-    setEmail("");
-    setPassword(" ");
   };
+
   return (
     <div>
       <>
