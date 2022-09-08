@@ -8,8 +8,8 @@ const Sell = () => {
   const [quantity, setQuantity] = useState("");
   const [delivery, setDelivery] = useState("");
   const [location, setLocation] = useState("");
-  const [email, setEmail] = useState("");
-  const user = localStorage.getItem("email")
+  //const [email, setEmail] = useState("");
+  const email = localStorage.getItem("email")
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,7 +30,7 @@ const Sell = () => {
   }
   return (
     <div>
-      <h5>Welcome : {user}</h5>
+      <h5>Welcome : {email}</h5>
       <Button className="logout" variant="outline-warning" onClick={handleLogout}>Logout Here</Button>{' '}
       <Form>
         <Form.Group className="mb-3" onSubmit={handleSubmit}>
@@ -93,16 +93,7 @@ const Sell = () => {
             value={location}
           />
         </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>Email Address</Form.Label>
-          <Form.Control
-            type="email"
-            className="form"
-            placeholder="Enter Email Address"
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
-          />
-        </Form.Group>
+   
 
         <Button variant="primary" type="submit" onClick={handleSubmit}>
           Submit
