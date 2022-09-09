@@ -9,7 +9,7 @@ const Market = () => {
   useEffect(() => {
     const data = {
       method: "get",
-      url: "http://localhost:8000/app/readproducts",
+      url: "http://localhost:8000/api/v1/products/readproducts",
     };
     axios(data)
       .then((result) => {

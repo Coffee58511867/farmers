@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import ProductList from "./ProductList";
 const Sell = () => {
@@ -10,14 +10,20 @@ const Sell = () => {
   const [location, setLocation] = useState("");
   //const [email, setEmail] = useState("");
   const email = localStorage.getItem("email")
+  const updateDetails = localStorage.getItem("updateDetails");
+  console.log(email, updateDetails);
+  
 
   const handleSubmit = async (e) => {
+
     e.preventDefault();
     try {
-      const body = { title, description, price, quantity, delivery, location, email};
-      const response = await fetch("http://localhost:8000/app/uploadproduct", {
+      const body = { title, description, price, quantity, delivery, location, email };
+      console.log(body);
+      const response = await fetch("http://localhost:8000/api/v1/products/uploadproduct", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        mode: 'cors',
         body: JSON.stringify(body),
       });
       console.log(response);

@@ -14,9 +14,10 @@ const Register = () => {
         e.preventDefault();
         try {
           const body = { firstname,email,password,lastname,phone,address};
-          const response = await fetch("http://localhost:8000/app/register", {
+          const response = await fetch("http://localhost:8000/api/v1/users/register", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
+            mode: 'cors',
             body: JSON.stringify(body),
           });
           console.log(response);
