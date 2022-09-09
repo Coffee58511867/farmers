@@ -1,13 +1,26 @@
-import React, { useState } from "react";
+import React, { forwardRef, useImperativeHandle, useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 import { Row, Card, Button, Table } from "react-bootstrap";
+import Sell from "./Sell";
 
-const ProductList = () => {
+export const ProductList = () => {
   const [products, setProducts] = useState([]);
+  const [updateDetails, setUpdateDetails] = useState({
+    title: '',
+    description: '',
+    price: '',
+    quantity: '',
+    delivery: '',
+    location: ''
+  });
+
+  
+
+  
  
   useEffect(() => {
-    axios.get("http://localhost:8000/app/readproducts").then((response) => {
+    axios.get("http://localhost:8000/api/v1/products/readproducts").then((response) => {
       let arrayOfMrs = [];
 
       for (let i = 0; i < response.data.length; i++) {
@@ -22,7 +35,7 @@ const ProductList = () => {
   const deleteTodo = async (id) => {
     const del = {
       method: "delete",
-      url: "http://localhost:8000/app/deleteproducts/" + id,
+      url: "http://localhost:8000/api/v1/products/deleteproducts/" + id,
     };
     axios(del)
       .then((result) => {
@@ -33,18 +46,32 @@ const ProductList = () => {
         console.log(error);
       });
   };
-  const updateProduct = async (id) => {
-    const update = {
-      method: "PUT",
-      url: "http://localhost:8000/app/updateproduct/" + id,
-    };
-    axios(update)
-      .then((result) => {
-        console.log(result);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  const updateProduct = (item) => {
+    
+    console.log(item)
+    setUpdateDetails({
+      title: item.title,
+      description: item.description,
+      price: item.price,
+      quantity: item.quantity,
+      location: item.location,
+      delivery: item.delivery
+    });
+
+    window.localStorage.setItem("updateDetails", updateDetails);
+
+    
+    // const update = {
+    //   method: "PUT",
+    //   url: "http://localhost:8000/app/updateproduct/" + id,
+    // };
+    // axios(update)
+    //   .then((result) => {
+    //     console.log(result);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
   };
   return (
     <div>
@@ -75,7 +102,7 @@ const ProductList = () => {
                 <td>{val.location}</td>
 
                 <td>
-                  <Button onClick={() => updateProduct(val._id)}>Edit</Button>
+                  <Button onClick={() => updateProduct(val)}>Edit</Button>
                 </td>
                 <td>
                   <Button

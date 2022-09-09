@@ -13,7 +13,7 @@ const Login = () => {
     if (email === " " || password === " ") {
       alert("Please enter Password or Username");
     }
-    fetch("http://localhost:8000/app/login", {
+    fetch("http://localhost:8000/api/v1/users/login", {
       method: "POST",
       crossDomain: true,
       headers: {
@@ -21,6 +21,7 @@ const Login = () => {
         Accept: "application/json",
         "Access-Control-Allow-Origin": "*",
       },
+      mode: 'cors',
       body: JSON.stringify(body),
     })
       .then((res) => res.json())
